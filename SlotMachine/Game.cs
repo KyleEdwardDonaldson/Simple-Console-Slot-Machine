@@ -12,13 +12,13 @@ namespace SlotMachine
         #region Properties
 
         public Settings CurrentSettings { get; set; }
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Game(Settings settings, double balance)
+        public Game(Settings settings, decimal balance)
         {
             CurrentSettings = settings;
             Balance = balance;
@@ -53,7 +53,7 @@ namespace SlotMachine
         {
             int stake = this.GetStakeFromUser();
             IEnumerable<Row> rows = this.Roll();
-            double winnings = 0.0;
+            decimal winnings = 0.0m;
 
             Console.WriteLine("\n\nRESULTS:\n");
 
@@ -113,6 +113,7 @@ namespace SlotMachine
                 userStakeInput = Console.ReadLine();
             } while (!Int32.TryParse(userStakeInput, out userStake) || userStake > this.Balance);
 
+            this.Balance -= userStake;
             return userStake;
         }
 
@@ -120,8 +121,8 @@ namespace SlotMachine
         {
             Cell selectedCell = null;
             Random random = new Random();
-            double randomResult = random.NextDouble();
-            double cumulative = 0.0;
+            decimal randomResult = (decimal)random.NextDouble();
+            decimal cumulative = 0.0m;
 
 
             foreach (Cell cell in CurrentSettings.PossibleCells)

@@ -9,14 +9,14 @@ namespace SlotMachine
         #region Properties
 
         public char Symbol { get; set; }
-        public double Coefficient { get; set; }
-        public double AppearanceChance { get; set; }
+        public decimal Coefficient { get; set; }
+        public decimal AppearanceChance { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Cell(char symbol, double coefficient, double appearanceChance)
+        public Cell(char symbol, decimal coefficient, decimal appearanceChance)
         {
             Symbol = symbol;
             Coefficient = coefficient;

@@ -22,9 +22,9 @@ namespace SlotMachine
 
         #region Public Methods
 
-        public double CalculateWin(int stake) //Calculates the winnings for a row, returns 0 if there is no win
+        public decimal CalculateWin(int stake) //Calculates the winnings for a row, returns 0 if there is no win
         {
-            double result = 0;
+            decimal result = 0;
             int distinctCount = Items.Distinct().Count();
 
             if (distinctCount <= 2) //If there's more than two distinct items, it can't be a winning line
@@ -32,8 +32,8 @@ namespace SlotMachine
                 if (distinctCount == 1 || Items.Any(c => c.Symbol == '*')) //If there's only one distinct item or one of them is a wildcard then it's a win
                 {
                     List<Cell> nonWildcards = Items.Where(c => c.Symbol != '*').ToList();
-                    double winCellCoefficient = nonWildcards.First().Coefficient;
-                    double totalCoefficient = 0.0;
+                    decimal winCellCoefficient = nonWildcards.First().Coefficient;
+                    decimal totalCoefficient = 0.0m;
 
                     for (int i = 0; i < nonWildcards.Count(); i++)
                     {

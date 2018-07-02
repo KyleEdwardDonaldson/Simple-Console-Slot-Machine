@@ -9,12 +9,12 @@ namespace SlotMachine
     {
         #region Fields
 
-        private static readonly Cell Wildcard = new Cell('*', 0, 0.05);
+        private static readonly Cell Wildcard = new Cell('*', 0, 0.05m);
         public static readonly Settings Default = new Settings(4, 3, new List<Cell>
         {
-            new Cell('A', 0.4, 0.45),
-            new Cell('B', 0.6, 0.35),
-            new Cell('P', 0.8, 0.15)
+            new Cell('A', 0.4m, 0.45m),
+            new Cell('B', 0.6m, 0.35m),
+            new Cell('P', 0.8m, 0.15m)
         }, true);
 
         #endregion
@@ -102,7 +102,7 @@ namespace SlotMachine
             do
             {
                 char symbol;
-                double coefficient;
+                decimal coefficient;
                 decimal appearanceChance;
 
                 string symbolResult;
@@ -127,7 +127,7 @@ namespace SlotMachine
                 do
                 {
                     coefficientResult = Console.ReadLine();
-                } while (!Double.TryParse(coefficientResult, out coefficient));
+                } while (!Decimal.TryParse(coefficientResult, out coefficient));
 
                 bool appearanceChanceIsDecimal;
                 Console.WriteLine("\nWhat appearance chance do you want? (0-100% | Remaining Chance: " + (int)(remainingAppearanceChance * 100) + "%)");
@@ -139,11 +139,11 @@ namespace SlotMachine
                     if (appearanceChanceIsDecimal)
                         appearanceChance = appearanceChance / 100; //Converts percentage given by user into a decimal
 
-                } while (!appearanceChanceIsDecimal || appearanceChance > remainingAppearanceChance); //Keeps getting input until it is a double and less than or equal to remaining chance
+                } while (!appearanceChanceIsDecimal || appearanceChance > remainingAppearanceChance); //Keeps getting input until it is a decimal and less than or equal to remaining chance
 
                 remainingAppearanceChance -= appearanceChance; //Updates remaining appearance chance
 
-                cells.Add(new Cell(symbol, coefficient, (double)appearanceChance));
+                cells.Add(new Cell(symbol, coefficient, appearanceChance));
 
                 Console.WriteLine(symbolResult + " cell created!");
             } while (remainingAppearanceChance > 0); //Keep creating cells until you've covered 100% of cases
