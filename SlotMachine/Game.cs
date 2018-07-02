@@ -11,12 +11,10 @@ namespace SlotMachine
     {
         #region Properties
 
-        public static Settings CurrentSettings { get; set; }
+        public Settings CurrentSettings { get; set; }
         public double Balance { get; set; }
 
         #endregion
-
-
 
         #region Constructors
 
@@ -49,12 +47,12 @@ namespace SlotMachine
 
         #endregion
 
-        #region Private Non-Static Methods
+        #region Private Methods
 
         private void Play()
         {
             int stake = this.GetStakeFromUser();
-            List<Row> rows = this.Roll();
+            IEnumerable<Row> rows = this.Roll();
             double winnings = 0.0;
 
             Console.WriteLine("\n\nRESULTS:\n");
@@ -74,11 +72,11 @@ namespace SlotMachine
 
             this.Balance += winnings;
 
-            Console.WriteLine("\nYou have won: " + winnings.ToString());
+            Console.WriteLine("\nYou have won: " + winnings);
             Console.WriteLine("Current balance is: " + this.Balance);
         }
 
-        private List<Row> Roll()
+        private IEnumerable<Row> Roll()
         {
             List<Row> rows = new List<Row>(CurrentSettings.SymbolsPerRow);
             Row row = new Row();

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 
 namespace SlotMachine
 {
-    class Program
+    public class Program
     {
-        static void Main()
+        private static void Main()
         {
             string setupOptionInput;
             Console.WriteLine("Welcome to the slot machine!");

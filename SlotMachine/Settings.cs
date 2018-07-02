@@ -88,12 +88,12 @@ namespace SlotMachine
         private static List<Cell> GetCellsFromUser(bool isWildcardUsed)
         {
             List<Cell> cells = new List<Cell>();
-            double remainingAppearanceChance = 1;
+            decimal remainingAppearanceChance = 1;
 
             if (isWildcardUsed)
             {
                 cells.Add(Wildcard);
-                remainingAppearanceChance -= Wildcard.AppearanceChance;
+                remainingAppearanceChance -= (decimal)Wildcard.AppearanceChance;
             }
 
             Console.Clear();
@@ -103,11 +103,10 @@ namespace SlotMachine
             {
                 char symbol;
                 double coefficient;
-                double appearanceChance;
+                decimal appearanceChance;
 
                 string symbolResult;
                 string coefficientResult;
-                string appearanceChanceResult;
 
 
                 string cellString = string.Join("", cells.Select(c => c.Symbol + " "));
@@ -116,14 +115,13 @@ namespace SlotMachine
                 else
                     Console.WriteLine("\nNo cells exist");
 
-                Console.WriteLine("Remaining % Chance: " + remainingAppearanceChance);
                 Console.WriteLine("\nNew Cell:");
                 Console.WriteLine("What do you want your cell symbol to be? (One character, no asterisks)");
                 
                 do
                 {
                     symbolResult = Console.ReadLine();
-                } while (!Char.TryParse(symbolResult, out symbol) || cells.Any(c => c.Symbol.Equals(symbol)) || symbol == '*');
+                } while (!Char.TryParse(symbolResult, out symbol) || cells.Any(c => c.Symbol.Equals(symbol))); //Keeps getting input until input is a char that doesn't exist already
 
                 Console.WriteLine("\nWhat coefficient do you want?");
                 do
@@ -131,16 +129,24 @@ namespace SlotMachine
                     coefficientResult = Console.ReadLine();
                 } while (!Double.TryParse(coefficientResult, out coefficient));
 
-                Console.WriteLine("\nWhat appearance chance do you want? (Decimal form | Remaining % Chance: " + remainingAppearanceChance.ToString() + ")");
+                bool appearanceChanceIsDecimal;
+                Console.WriteLine("\nWhat appearance chance do you want? (0-100% | Remaining Chance: " + (int)(remainingAppearanceChance * 100) + "%)");
                 do
                 {
-                    appearanceChanceResult = Console.ReadLine();
-                } while (!Double.TryParse(appearanceChanceResult, out appearanceChance) || appearanceChance > remainingAppearanceChance);
-                remainingAppearanceChance -= appearanceChance;
+                    string appearanceChanceResult = Console.ReadLine()?.Replace("%", "");
+                    appearanceChanceIsDecimal = Decimal.TryParse(appearanceChanceResult, out appearanceChance);
 
-                cells.Add(new Cell(symbol, coefficient, appearanceChance));
+                    if (appearanceChanceIsDecimal)
+                        appearanceChance = appearanceChance / 100; //Converts percentage given by user into a decimal
+
+                } while (!appearanceChanceIsDecimal || appearanceChance > remainingAppearanceChance); //Keeps getting input until it is a double and less than or equal to remaining chance
+
+                remainingAppearanceChance -= appearanceChance; //Updates remaining appearance chance
+
+                cells.Add(new Cell(symbol, coefficient, (double)appearanceChance));
+
                 Console.WriteLine(symbolResult + " cell created!");
-            } while (remainingAppearanceChance > 0);
+            } while (remainingAppearanceChance > 0); //Keep creating cells until you've covered 100% of cases
 
             Console.WriteLine("\nAll cells created!\n");
 
