@@ -83,17 +83,17 @@ namespace SlotMachine
 
             do
             {
-                if (row.Count == CurrentSettings.SymbolsPerRow)
+                if (row.Count == CurrentSettings.SymbolsPerRow) //Row contains number of cells settings wants
                 {
-                    rows.Add(new Row(row.ToList()));
-                    row.Clear();
+                    rows.Add(new Row(row.ToList())); //Clones row data into list
+                    row.Clear(); //Clears reusable row object
                 }
                 else
                 {
-                    row.Add(GetRandomCell());
+                    row.Add(GetRandomCell()); //Adds random cell to row
                 }
 
-            } while (rows.Count != CurrentSettings.Rows);
+            } while (rows.Count != CurrentSettings.Rows); //Keep looping until there are the number of rows the settings wants
 
             return rows;
         }
