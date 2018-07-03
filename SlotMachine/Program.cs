@@ -21,9 +21,9 @@ namespace SlotMachine
                 Console.WriteLine("Appearance Chance: " + cell.AppearanceChance);
             }
 
-            Console.WriteLine("\nTo begin please enter: \n'0' to start the game with default settings\n'1' for admin mode");
             do
             {
+                Console.WriteLine("\nTo begin please enter: \n'0' to start the game with default settings\n'1' for admin mode");
                 setupOptionInput = Console.ReadLine();
             } while (setupOptionInput != "0" && setupOptionInput != "1");
 

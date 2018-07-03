@@ -103,12 +103,12 @@ namespace SlotMachine
             string userStakeInput;
             int userStake = 0;
 
-            Console.WriteLine("Please enter the amount of money you'd like to stake:");
-
             do
             {
+                Console.WriteLine("Please enter the amount of money you'd like to stake:");
+
                 if (userStake > this.Balance)
-                    Console.WriteLine("You do not have enough money for this stake, please enter a lower amount:");
+                    Console.WriteLine("(You do not have enough money for this stake, please enter a lower amount)");
 
                 userStakeInput = Console.ReadLine();
             } while (!Int32.TryParse(userStakeInput, out userStake) || userStake > this.Balance);
@@ -149,9 +149,9 @@ namespace SlotMachine
             string userDepositInput;
             int deposit;
 
-            Console.WriteLine("\nPlease enter the amount of money you'd like to deposit:");
             do
             {
+                Console.WriteLine("\nPlease enter the amount of money you'd like to deposit:");
                 userDepositInput = Console.ReadLine();
             } while (!Int32.TryParse(userDepositInput, out deposit));
 

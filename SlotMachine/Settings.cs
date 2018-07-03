@@ -55,24 +55,24 @@ namespace SlotMachine
 
             Console.Clear();
             Console.WriteLine("Game Setup");
-            Console.WriteLine("\nDo you want to include a wildcard cell? 'Y' or 'N' ");
             do
             {
+                Console.WriteLine("\nDo you want to include a wildcard cell? 'Y' or 'N' ");
                 includeWildcardInput = Console.ReadLine()?.ToUpper();
             } while (includeWildcardInput != "Y" && includeWildcardInput != "N");
             includeWildcard = includeWildcardInput == "Y";
 
             List<Cell> cellOptions = GetCellsFromUser(includeWildcard);
 
-            Console.WriteLine("Please enter the number of rows: ");
             do
             {
+                Console.WriteLine("Please enter the number of rows: ");
                 rowsInput = Console.ReadLine();
             } while (!Int32.TryParse(rowsInput, out rows));
 
-            Console.WriteLine("\nPlease enter the number of symbols per row: ");
             do
             {
+                Console.WriteLine("\nPlease enter the number of symbols per row: ");
                 symbolsPerRowInput = Console.ReadLine();
             } while (!Int32.TryParse(symbolsPerRowInput, out symbolsPerRow));
 
@@ -115,24 +115,24 @@ namespace SlotMachine
                 else
                     Console.WriteLine("\nNo cells exist");
 
-                Console.WriteLine("\nNew Cell:");
-                Console.WriteLine("What do you want your cell symbol to be? (One character, no asterisks)");
-                
+                Console.WriteLine("\nNew Cell");
                 do
                 {
+                    Console.WriteLine("What do you want your cell symbol to be? (One character, no asterisks)");
                     symbolResult = Console.ReadLine();
                 } while (!Char.TryParse(symbolResult, out symbol) || cells.Any(c => c.Symbol.Equals(symbol))); //Keeps getting input until input is a char that doesn't exist already
 
-                Console.WriteLine("\nWhat coefficient do you want?");
                 do
                 {
+                    Console.WriteLine("\nWhat coefficient do you want?");
                     coefficientResult = Console.ReadLine();
                 } while (!Decimal.TryParse(coefficientResult, out coefficient));
 
                 bool appearanceChanceIsDecimal;
-                Console.WriteLine("\nWhat appearance chance do you want? (0-100% | Remaining Chance: " + (int)(remainingAppearanceChance * 100) + "%)");
+                
                 do
                 {
+                    Console.WriteLine("\nWhat appearance chance do you want? (0-100% | Remaining Chance: " + (int)(remainingAppearanceChance * 100) + "%)");
                     string appearanceChanceResult = Console.ReadLine()?.Replace("%", "");
                     appearanceChanceIsDecimal = Decimal.TryParse(appearanceChanceResult, out appearanceChance);
 
